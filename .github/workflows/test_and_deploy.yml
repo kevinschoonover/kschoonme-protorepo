@@ -67,8 +67,8 @@ jobs:
           # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
           # Split the tag into service and version
-          SERVICE=$(echo $VERSION | cut -d'@' -f1)
-          VERSION=$(echo $VERSION | cut -d'@' -f2)
+          SERVICE=$(echo $TAG | cut -d'@' -f1)
+          VERSION=$(echo $TAG | cut -d'@' -f2)
 
           # Build and deploy the service with the particular version
           poetry run ./build.py $SERVICE $VERSION
