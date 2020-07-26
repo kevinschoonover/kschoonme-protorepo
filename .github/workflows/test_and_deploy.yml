@@ -1,0 +1,70 @@
+name: Build and Publish a Service
+
+on: [push]
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    if: startsWith(github.ref, 'refs/tags/v')
+    env:
+      node_version: 14
+      python_version: 3.8
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ env.python_version }}
+    - name: Install poetry
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+    - name: Cache poetry environments
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pypoetry/virtualenvs # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
+          ${{ runner.OS }}-protofiles-
+          ${{ runner.OS }}-
+    - name: Cache yarn packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/yarn # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-protofiles-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
+          ${{ runner.OS }}-protofiles-
+          ${{ runner.OS }}-
+
+    - uses: actions-rs/cargo@v1
+      with:
+        command: login
+        args: ${{ secrets.CRATES_TOKEN }}
+
+    - name: Set npmjs.org authentication token
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+    - name: Install dependencies with poetry
+      run: poetry install
+
+    - name: Build and publish the service's libraries
+      run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          echo "${{ github.ref }}"
+          # poetry run ./build.py notifications 1.0.0

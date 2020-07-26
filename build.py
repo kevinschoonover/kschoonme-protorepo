@@ -100,8 +100,6 @@ def build(service, version):
             with chdir(tmpdirname):
                 subprocess.run(["bash", BUILD_AND_PUBLISH_FILENAME], check=True)
 
-            input()
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
