@@ -45,11 +45,6 @@ for language_name in SUPPORTED_LANGUAGES:
     )
     TEMPLATE_DIR_PATHS[language_name] = template_dir_path
 
-assert os.path.exists(
-    "/home/kschoon/.cargo/credentials"
-), "Please use `cargo login` before using the build command"
-
-
 @contextlib.contextmanager
 def chdir(dirname=None):
     curdir = os.getcwd()
