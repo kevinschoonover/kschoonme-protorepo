@@ -60,11 +60,15 @@ jobs:
 
     - name: Build and publish the service's libraries
       run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip git ref prefix from the tag
+          TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
 
           # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-          echo "${{ github.ref }}"
-          # poetry run ./build.py notifications 1.0.0
+          # Split the tag into service and version
+          SERVICE=$(echo $VERSION | cut -d'@' -f1)
+          VERSION=$(echo $VERSION | cut -d'@' -f2)
+
+          # Build and deploy the service with the particular version
+          poetry run ./build.py $SERVICE $VERSION
