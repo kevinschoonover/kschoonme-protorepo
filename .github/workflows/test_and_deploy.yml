@@ -10,7 +10,7 @@ jobs:
       matrix:
         python-version: [3.8]
 
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/')
     env:
       node_version: 14
       python_version: 3.8
