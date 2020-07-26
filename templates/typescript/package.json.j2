@@ -1,0 +1,22 @@
+{
+  "name": "kschoonme-{{ SERVICE_NAME }}-pb",
+  "version": "{{ SERVICE_VERSION }}",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/kevinschoonover/kschoonme-protorepo",
+  "author": "Kevin Schoonover <me@kschoon.me>",
+  "license": "MPL-2.0",
+  "description": "Generated protofiles for the {{ SERVICE_NAME }} service in kschoon.me infrastructure",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.1.1",
+    "@grpc/proto-loader": "^0.5.4",
+    "google-protobuf": "^3.12.2"
+  },
+  "devDependencies": {
+    "grpc-tools": "^1.9.1",
+    "grpc_tools_node_protoc_ts": "^4.1.0"
+  },
+  "scripts": {
+    "build:proto": "./scripts/build-protos.sh ./service.proto ./src/proto"
+  }
+}

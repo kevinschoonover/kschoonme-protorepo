@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package notifications;
+
+message Payload {
+  string number = 1;
+  string body = 2;
+}
+
+message Response {
+  bool success = 1;
+  string body = 2;
+}
+
+service Notifications {
+  rpc SendText(Payload) returns (Response) {};
+}

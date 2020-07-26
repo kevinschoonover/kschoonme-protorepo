@@ -1,0 +1,10 @@
+{
+  "name": "kschoonme-protorepo",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "description": "Monorepo containing protorepo files for all *.kschoon.me services.",
+  "repository": "git@github.com:kevinschoonover/kschoonme-protorepo.git",
+  "author": "Kevin Schoonover <me@kschoon.me>",
+  "license": "MPL-2.0",
+  "private": true
+}

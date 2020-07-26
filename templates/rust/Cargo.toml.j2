@@ -1,0 +1,18 @@
+[package]
+name = "kschoonme-{{ SERVICE_NAME }}-pb"
+version = "{{ SERVICE_VERSION }}"
+authors = ["Kevin Schoonover <me@kschoon.me>"]
+edition = "2018"
+license = "MPL-2.0"
+description = "Generated protofiles for the {{ SERVICE_NAME }} service in kschoon.me infrastructure"
+repository = "https://github.com/kevinschoonover/kschoonme-protorepo/"
+homepage = "https://github.com/kevinschoonover/kschoonme-protorepo/"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tonic = "0.3.0"
+prost = "0.6.1"
+
+[build-dependencies]
+tonic-build = "0.3.0"

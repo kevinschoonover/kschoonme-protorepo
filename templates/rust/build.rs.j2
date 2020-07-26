@@ -1,0 +1,13 @@
+use tonic_build;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tonic_build::configure()
+        .build_client(true)
+        .build_server(true)
+        .out_dir("./src/")
+        .format(true)
+        .compile(&["{{ PROTOS_DIR_NAME }}/service.proto"], &["{{ PROTOS_DIR_NAME }}/"])
+        .unwrap();
+    println!("cargo:rerun-if-changed={{ PROTOS_DIR_NAME }}/service.proto");
+    Ok(())
+}
