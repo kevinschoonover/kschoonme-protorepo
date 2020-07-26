@@ -1,0 +1,8 @@
+{
+  "name": "identity",
+  "version": "1.0.0-alpha.1",
+  "description": "Protofiles for the identity gRPC service.",
+  "repository": "https://github.com/kevinschoonover/kschoonme-protorepo",
+  "author": "Kevin Schoonover <me@kschoon.me>",
+  "license": "MPL-2.0"
+}
