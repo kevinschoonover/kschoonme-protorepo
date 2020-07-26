@@ -45,6 +45,7 @@ for language_name in SUPPORTED_LANGUAGES:
     )
     TEMPLATE_DIR_PATHS[language_name] = template_dir_path
 
+
 @contextlib.contextmanager
 def chdir(dirname=None):
     curdir = os.getcwd()
