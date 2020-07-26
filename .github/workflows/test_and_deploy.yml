@@ -24,28 +24,31 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ env.python_version }}
-    - name: Install poetry
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
-    - name: Cache poetry environments
-      uses: actions/cache@v1
+
+    - name: Cache pip/poetry environments
+      uses: actions/cache@v2
       with:
-        path: ~/.cache/pypoetry/virtualenvs # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
-        restore-keys: |
-          ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
-          ${{ runner.OS }}-protofiles-
-          ${{ runner.OS }}-
+        path: |
+          ~/.cache/pypoetry/virtualenvs # npm cache files are stored in `~/.npm` on Linux/macOS
+          ~/.cache/pip/
+        key: ${{ runner.OS }}-protofiles_py-${{ hashFiles('**/poetry.lock') }}
+    - name: Cache rust
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+        key: ${{ runner.OS }}-protofiles_rs
     - name: Cache yarn packages
       uses: actions/cache@v2
       with:
         path: ~/.cache/yarn # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.OS }}-protofiles-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.OS }}-protofiles-${{ hashFiles('**/poetry.lock') }}
-          ${{ runner.OS }}-protofiles-
-          ${{ runner.OS }}-
+        key: ${{ runner.OS }}-protofiles_js-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install poetry
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
 
     - uses: actions-rs/cargo@v1
       with:
