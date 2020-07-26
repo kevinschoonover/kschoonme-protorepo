@@ -6,5 +6,11 @@
   "repository": "git@github.com:kevinschoonover/kschoonme-protorepo.git",
   "author": "Kevin Schoonover <me@kschoon.me>",
   "license": "MPL-2.0",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "protos/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
 }

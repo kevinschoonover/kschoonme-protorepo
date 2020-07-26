@@ -19,6 +19,8 @@ env = Environment(
 # The root directory containing the language-specific package templates
 TEMPLATE_DIR_NAME = os.environ.get("TEMPLATE_DIR_NAME", "templates")
 
+# Relative path to the directory containing all services
+SERVICE_ROOT = os.environ.get("SERVICE_ROOT", "./protos")
 
 # Relative paths from the root to each SUPPORTED_LANGUAGES template directory
 TEMPLATE_DIR_PATHS = {}
@@ -61,18 +63,18 @@ def chdir(dirname=None):
 
 def build(service, version):
     version = semver.VersionInfo.parse(version)
+    service_dir = os.path.join(SERVICE_ROOT, service)
 
-    assert os.path.exists(service) and os.path.isdir(
-        service
+    assert os.path.exists(service_dir) and os.path.isdir(
+        service_dir
     ), "Service {} does not exist (directory not found)".format(service)
 
     for language_name in SUPPORTED_LANGUAGES:
-        if language_name == "rust":
-            continue
-
         with tempfile.TemporaryDirectory() as tmpdirname:
             shutil.copytree(
-                service, os.path.join(tmpdirname, PROTOS_DIR_NAME), dirs_exist_ok=True
+                service_dir,
+                os.path.join(tmpdirname, PROTOS_DIR_NAME),
+                dirs_exist_ok=True,
             )
             shutil.copytree(
                 TEMPLATE_DIR_PATHS[language_name], tmpdirname, dirs_exist_ok=True

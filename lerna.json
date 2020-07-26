@@ -1,0 +1,6 @@
+{
+  "packages": ["protos/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true
+}
