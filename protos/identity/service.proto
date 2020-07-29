@@ -6,8 +6,8 @@ message UserID {
   string id = 1;
 }
 
-message OpenIDProfile {
-  string sub = 1;
+message UserProfile {
+  string id = 1;
   string email = 2;
   bool email_verified = 3;
   string phone_number = 4;
@@ -17,6 +17,17 @@ message OpenIDProfile {
   string locale = 8;
 }
 
+message CreateUserProfile {
+  string email = 1;
+  string phone_number = 2;
+  string given_name = 3;
+  string family_name = 4;
+  string locale = 5;
+}
+
 service Identity {
-  rpc GetOpenIDProfile(UserID) returns (OpenIDProfile) {};
+  rpc GetOpenIDProfile(UserID) returns (UserProfile) {};
+  rpc CreateUser(CreateUserProfile) returns (UserProfile) {};
+  rpc ValidateEmail(UserID) returns (UserProfile) {};
+  rpc ValidatePhoneNumber(UserID) returns (UserProfile) {};
 }
