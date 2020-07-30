@@ -25,9 +25,18 @@ message CreateUserProfile {
   string locale = 5;
 }
 
+message UpdateUserProfile {
+  string email = 1;
+  bool email_verified = 2;
+  string phone_number = 3;
+  bool phone_number_verified = 4;
+  string given_name = 6;
+  string family_name = 7;
+  string locale = 8;
+}
+
 service Identity {
-  rpc GetOpenIDProfile(UserID) returns (UserProfile) {};
+  rpc GetUserProfile(UserID) returns (UserProfile) {};
   rpc CreateUser(CreateUserProfile) returns (UserProfile) {};
-  rpc ValidateEmail(UserID) returns (UserProfile) {};
-  rpc ValidatePhoneNumber(UserID) returns (UserProfile) {};
+  rpc UpdateUser(UpdateUserProfile) returns (UserProfile) {};
 }
