@@ -37,8 +37,25 @@ message UpdateUserProfile {
   string locale = 8;
 }
 
+message PasswordlessCode {
+  UserID user = 1;
+  string code = 2;
+}
+
+message Result {
+  enum ResponseCode {
+    SUCCESS = 0;
+    CARRIER_ERROR = 1;
+    VERIFICATION_ERROR = 2;
+  }
+  ResponseCode code = 1;
+  string reason = 2;
+}
+
 service Identity {
   rpc GetUserProfile(UserID) returns (UserProfile) {};
   rpc CreateUser(CreateUserProfile) returns (UserProfile) {};
   rpc UpdateUser(UpdateUserProfile) returns (UserProfile) {};
+  rpc SendPasswordlessCode(UserID) returns (Result) {};
+  rpc VerifyPasswordlessCode(PasswordlessCode) returns (Result) {};
 }
