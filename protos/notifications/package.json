@@ -1,6 +1,6 @@
 {
   "name": "notifications",
-  "version": "1.3.1",
+  "version": "2.0.0-alpha.0",
   "description": "Protofiles for the notifications gRPC service.",
   "repository": "https://github.com/kevinschoonover/kschoonme-protorepo",
   "author": "Kevin Schoonover <me@kschoon.me>",
