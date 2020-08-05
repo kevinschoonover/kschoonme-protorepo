@@ -42,7 +42,7 @@ message PasswordlessCode {
   string code = 2;
 }
 
-message Result {
+message PasswordlessResult {
   enum ResponseCode {
     SUCCESS = 0;
     CARRIER_ERROR = 1;
@@ -56,6 +56,6 @@ service Identity {
   rpc GetUserProfile(UserID) returns (UserProfile) {};
   rpc CreateUser(CreateUserProfile) returns (UserProfile) {};
   rpc UpdateUser(UpdateUserProfile) returns (UserProfile) {};
-  rpc SendPasswordlessCode(UserID) returns (Result) {};
-  rpc VerifyPasswordlessCode(PasswordlessCode) returns (Result) {};
+  rpc SendPasswordlessCode(UserID) returns (PasswordlessResult) {};
+  rpc VerifyPasswordlessCode(PasswordlessCode) returns (PasswordlessResult) {};
 }

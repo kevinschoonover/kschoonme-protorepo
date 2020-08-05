@@ -2,16 +2,20 @@ syntax = "proto3";
 
 package notifications;
 
-message Payload {
+message NotificationRequest {
   string number = 1;
   string body = 2;
 }
 
-message Response {
-  bool success = 1;
-  string body = 2;
+message NotificationResult {
+  enum ResponseCode {
+    SUCCESS = 0;
+    CARRIER_ERROR = 1;
+  }
+  ResponseCode code = 1;
+  string reason = 2;
 }
 
 service Notifications {
-  rpc SendText(Payload) returns (Response) {};
+  rpc SendText(NotificationRequest) returns (NotificationResult) {};
 }
